@@ -8,8 +8,10 @@ import React, {
 
 export default class List extends Component {
   render() {
-    <Text>
-      Hello World!
-    </Text>
+    return (
+      <Text>
+        Hello World!
+      </Text>
+    )
   }
 }

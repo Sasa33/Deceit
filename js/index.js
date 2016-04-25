@@ -1,9 +1,11 @@
-import React from 'react-native'
+import React, { Component } from 'react-native'
 import { Provider } from 'react-redux'
-import store from './store'
+import configStore from './store'
 import App from './App'
 
-class Root extends Component{
+let store = configStore()
+
+export default class Root extends Component{
   constructor(props) {
     super(props)
   }
