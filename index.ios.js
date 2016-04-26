@@ -8,38 +8,29 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View
+  NavigatorIOS
 } from 'react-native';
 
-import Root from './js';
+import App from './js/App';
+
 
 class Deceit extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Root />
-      </View>
-    );
+      // <Text style={styles.welcome}>Hello World!</Text>
+      <NavigatorIOS style={styles.container} 
+        initialRoute={{
+          title: 'ESL Podcast', 
+          component: App
+        }} />
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
 
 AppRegistry.registerComponent('Deceit', () => Deceit);
