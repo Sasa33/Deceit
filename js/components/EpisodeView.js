@@ -8,8 +8,7 @@ import React, {
   View
 } from 'react-native'
 
-import Video from 'react-native-video'
-
+import Media from './Media'
 
 export default class EpisodeView extends Component {
  
@@ -22,11 +21,7 @@ export default class EpisodeView extends Component {
           <Text style={styles.title}>{episode.title}</Text>
           <View style={styles.separator}/>
         </View>
-
-        <Video source={{uri: episode.audio}}
-           resizeMode="cover" repeat={true} key="video2"
-           style={styles.backgroundVideo} />
-
+        <Media />
         <Text style={styles.description}>{episode.script}</Text>
       </View>
     )
@@ -54,9 +49,5 @@ var styles = StyleSheet.create({
     fontSize: 18,
     margin: 5,
     color: '#656565'
-  },
-  backgroundVideo: {
-    position: 'relative',
-    height: 100,
-  },
+  }
 })
