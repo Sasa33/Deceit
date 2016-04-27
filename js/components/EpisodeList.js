@@ -69,6 +69,7 @@ var styles = StyleSheet.create({
     // backgroundColor: 'white',
     fontSize: 18,
     padding: 15
+
   },
   separator: {
     height: 1,
