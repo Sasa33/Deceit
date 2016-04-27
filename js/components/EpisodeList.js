@@ -48,23 +48,13 @@ export default class EpisodeList extends Component {
     console.log(this.props.topic)
 
     return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>{this.props.topic.title}</Text>
-        </View>
-        <View>
-          <ListView dataSource={this.state.dataSource}
-            renderRow={this._renderRow.bind(this)} />
-        </View>
-      </View>
+      <ListView dataSource={this.state.dataSource}
+        renderRow={this._renderRow.bind(this)} />
     )
   }
 }
 
 var styles = StyleSheet.create({
-  container: {
-    padding: 10
-  },
   title: {
     textAlign: 'center',
     fontSize: 20,

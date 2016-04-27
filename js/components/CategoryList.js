@@ -26,7 +26,7 @@ export default class CategoryList extends Component {
     let topic = data.data.filter(topic => topic.id === categoryId)[0]
 
     this.props.navigator.push({
-      title: "Episode List",
+      title: topic.title + " List",
       component: EpisodeList,
       passProps: {topic: topic}
     })
