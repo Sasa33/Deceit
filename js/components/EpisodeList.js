@@ -62,13 +62,13 @@ var styles = StyleSheet.create({
     marginTop: 70
   },
   lineContainer: {
-    padding: 10
+    // padding: 10
   },
   text: {
     color: '#656565',
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     fontSize: 18,
-    padding: 5
+    padding: 15
   },
   separator: {
     height: 1,
