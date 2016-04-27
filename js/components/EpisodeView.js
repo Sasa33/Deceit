@@ -21,7 +21,7 @@ export default class EpisodeView extends Component {
           <Text style={styles.title}>{episode.title}</Text>
           <View style={styles.separator}/>
         </View>
-        <Media />
+        <Media episode={episode}/>
         <Text style={styles.description}>{episode.script}</Text>
       </View>
     )
