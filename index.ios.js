@@ -20,7 +20,7 @@ class Deceit extends Component {
       // <Text style={styles.welcome}>Hello World!</Text>
       <NavigatorIOS style={styles.container} 
         initialRoute={{
-          title: 'ESL Podcast', 
+          title: 'Topics', 
           component: App
         }} />
     )

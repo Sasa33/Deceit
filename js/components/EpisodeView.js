@@ -48,6 +48,7 @@ var styles = StyleSheet.create({
   description: {
     fontSize: 18,
     margin: 5,
+    marginTop: 20,
     color: '#656565'
   }
 })
