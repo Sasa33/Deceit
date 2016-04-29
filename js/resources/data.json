@@ -10,19 +10,31 @@
           "id": "1",
           "title": "Episode 1",
           "media": "http://sound.tingroom.com/english96ad/lesson/esl2015/rcsh/326041fadcbecbfeda.mp3",
-          "script": "Sorry,there is not text temporarily."
+          "script": [
+            "Sorry,there is not text temporarily.",
+            "aaaaaaaaaaaaaaaaaa.",
+            "bbbbbbbbbbbbbbbbbbbbbbbbb."
+            ]
         },
         {
           "id": "2",
           "title": "Episode 2",
           "media": "http://sound.tingroom.com/english96ad/lesson/esl2015/rcsh/326044babefcaedfdc.mp3",
-          "script": "Sorry,there is not text temporarily."
+          "script": [
+            "Sorry,there is not text temporarily.",
+            "111111111.",
+            "22222222222222."
+            ]
         },
         {
           "id": "3",
           "title": "Episode 3",
           "media": "http://sound.tingroom.com/english96ad/lesson/englishpod/103011accbdfebfade.mp3",
-          "script": "Sorry,there is not text temporarily."
+          "script": [
+            "Sorry,there is not text temporarily.",
+            "33333.",
+            "44444444."
+            ]
         }
       ]
     },
