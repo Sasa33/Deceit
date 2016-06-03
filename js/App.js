@@ -1,8 +1,7 @@
 import React, {
   Component,
-  View,
-  Text,
-  StyleSheet
+  StyleSheet,
+  NavigatorIOS
 } from 'react-native'
 
 import { connect } from 'react-redux'
@@ -17,11 +16,23 @@ class App extends Component{
   }
 
   render() {
+    console.log(this.props);
     return (
-      <CategoryList {...this.props} />
+      <NavigatorIOS style={styles.container}
+        initialRoute={{
+          title: 'Topics',
+          component: CategoryList,
+          passProps: {...this.props}
+        }} />
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
 
 const mapStateToProps = (state) => {
   return {
