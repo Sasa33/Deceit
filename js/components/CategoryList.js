@@ -17,22 +17,8 @@ export default class CategoryList extends Component {
     this.dataSource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1.id !== r2.id
     })
-    // console.log(props);
-    // this.state = {
-    //   dataSource: dataSource.cloneWithRows(props.pods)
-    // }
   }
 
-  // componentWillMount() {
-  //   console.log(this.props);
-  //   this.state = {
-  //     dataSource: this.dataSource.cloneWithRows(this.props.pods)
-  //   }
-  // }
-
-  _updateList(pod) {
-    this.props.action.fetchEpisodes(pod.title)
-  }
 
   _rowPressed(categoryId) {
     let pod = this.props.pods.filter(pod => pod.id === categoryId)[0]
@@ -43,8 +29,8 @@ export default class CategoryList extends Component {
       title: pod.title + " List",
       component: EpisodeList,
       passProps: {
+        store: this.props.store,
         pod: pod,
-        // updateList: this._updateList,
         action: this.props.action,
         episodes: this.props.episodes
       }
@@ -70,7 +56,7 @@ export default class CategoryList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
+    console.log(nextProps);
   }
 
   render() {

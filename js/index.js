@@ -13,7 +13,7 @@ export default class Root extends Component{
   render() {
     return (
         <Provider store={store}>
-          <App navigator={this.props.navigator}/>
+          <App store={store} {...this.props}/>
         </Provider>
       )
   }

@@ -12,17 +12,17 @@ import { fetchPods, fetchEpisodes } from './actions/pods'
 import CategoryList from './components/CategoryList'
 
 class App extends Component{
-  constructor(props) {
-    super(props)
-    props.action.fetchPods();
+  componentDidMount() {
+    this.props.action.fetchPods();
   }
 
   render() {
-    let { navigator, pods, episodes, action } = this.props
+    let { navigator, pods, episodes, action, store } = this.props
     console.log(this.props);
 
     return (
       <CategoryList
+        store={store}
         navigator={navigator}
         pods={pods}
         action={action}

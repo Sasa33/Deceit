@@ -9,19 +9,19 @@ import React, {
 
 import EpisodeView from './EpisodeView'
 
-export default class EpisodeList extends Component {
+import { connect } from 'react-redux'
+
+
+class EpisodeList extends Component {
   constructor(props) {
     super(props)
     this.dataSource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1.id !== r2.id
     })
-    // props.updateList(props.pod);
-
   }
 
   componentWillReceiveProps(nextProps) {
     console.log('nextProps');
-    // props.action.fetchEpisodes(nextProps.pod.title)
   }
 
   componentDidMount() {
@@ -43,8 +43,6 @@ export default class EpisodeList extends Component {
   }
 
   _renderRow(rowData, sectionID, rowID) {
-    // console.log(rowData)
-
     return (
       <TouchableHighlight onPress={() => this._rowPressed(rowData.podId)}
           underlayColor='#dddddd'>
@@ -70,6 +68,7 @@ export default class EpisodeList extends Component {
   }
 }
 
+
 var styles = StyleSheet.create({
   title: {
     textAlign: 'center',
@@ -92,3 +91,12 @@ var styles = StyleSheet.create({
     backgroundColor: '#dddddd'
   },
 })
+
+
+const mapStateToProps = (state) => {
+  return {
+    episodes: state.episodes
+  };
+}
+
+export default connect(mapStateToProps)(EpisodeList)
