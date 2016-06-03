@@ -28,10 +28,6 @@ class EpisodeList extends Component {
     this.props.action.fetchEpisodes(this.props.pod.title)
   }
 
-  componentWillUnmount() {
-    console.log('unmount')
-  }
-
   _rowPressed(episodeId) {
     let episode = this.props.episodes.filter(ep => ep.podId === episodeId)[0]
 
@@ -55,9 +51,7 @@ class EpisodeList extends Component {
   }
 
   render() {
-    console.log(this.props)
     let dataSource = this.dataSource.cloneWithRows(this.props.episodes)
-
 
     return (
       <ListView dataSource={dataSource}

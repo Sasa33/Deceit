@@ -8,7 +8,6 @@ import React, {
   Image
 } from 'react-native'
 
-// import data from '../resources/data.json'
 import EpisodeList from './EpisodeList'
 
 export default class CategoryList extends Component {
@@ -19,20 +18,16 @@ export default class CategoryList extends Component {
     })
   }
 
-
   _rowPressed(categoryId) {
     let pod = this.props.pods.filter(pod => pod.id === categoryId)[0]
-
-    console.log(this.props.episodes);
 
     this.props.navigator.push({
       title: pod.title + " List",
       component: EpisodeList,
       passProps: {
-        store: this.props.store,
         pod: pod,
-        action: this.props.action,
-        episodes: this.props.episodes
+        store: this.props.store,
+        action: this.props.action
       }
     })
   }
@@ -60,7 +55,6 @@ export default class CategoryList extends Component {
   }
 
   render() {
-    console.log(this.props);
     let dataSource = this.dataSource.cloneWithRows(this.props.pods);
 
     return (

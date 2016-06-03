@@ -17,25 +17,15 @@ class App extends Component{
   }
 
   render() {
-    let { navigator, pods, episodes, action, store } = this.props
-    console.log(this.props);
-
     return (
-      <CategoryList
-        store={store}
-        navigator={navigator}
-        pods={pods}
-        action={action}
-        episodes={episodes}
-      />
+      <CategoryList {...this.props} />
     )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    pods: state.pods,
-    episodes: state.episodes
+    pods: state.pods
   }
 }
 

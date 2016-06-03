@@ -17,7 +17,7 @@ class VideoPlayer extends Component {
     this.onLoad = this.onLoad.bind(this)
     this.onProgress = this.onProgress.bind(this)
   }
-  
+
   state = {
     rate: 1,
     volume: 1,
@@ -88,7 +88,7 @@ class VideoPlayer extends Component {
         <View style={styles.fullScreen}>
           <Video
           // "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4"
-            source={{uri: this.props.episode.media}}
+            source={{uri: this.props.audio}}
             style={styles.fullScreen}
             rate={this.state.rate}
             paused={this.state.paused}
