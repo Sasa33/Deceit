@@ -1,28 +1,28 @@
 'use strict'
- 
+
 import React, {
-  Component, 
-  StyleSheet, 
-  Image, 
-  Text, 
+  Component,
+  StyleSheet,
+  Image,
+  Text,
   View
 } from 'react-native'
 
 import Media from './Media'
 
 export default class EpisodeView extends Component {
- 
+
   render() {
     let episode = this.props.episode
- 
+
     return (
       <View style={styles.container}>
         <View style={styles.heading}>
-          <Text style={styles.title}>{episode.title}</Text>
+          <Text style={styles.title}>{episode.podTitle}</Text>
           <View style={styles.separator}/>
         </View>
         <Media episode={episode}/>
-        <Text style={styles.description}>{episode.script}</Text>
+        <Text style={styles.description}>{episode.podParagraph}</Text>
       </View>
     )
   }

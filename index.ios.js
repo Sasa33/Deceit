@@ -11,17 +11,16 @@ import React, {
   NavigatorIOS
 } from 'react-native';
 
-import App from './js/App';
+import Root from './js/index';
 
 
 class Deceit extends Component {
   render() {
     return (
-      // <Text style={styles.welcome}>Hello World!</Text>
       <NavigatorIOS style={styles.container} 
         initialRoute={{
           title: 'Topics', 
-          component: App
+          component: Root
         }} />
     )
   }

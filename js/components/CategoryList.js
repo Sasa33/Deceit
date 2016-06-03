@@ -1,38 +1,57 @@
 import React, {
-  Component, 
-  StyleSheet, 
-  ListView, 
-  Text, 
+  Component,
+  StyleSheet,
+  ListView,
+  Text,
   View,
   TouchableHighlight,
   Image
 } from 'react-native'
 
-import data from '../resources/data.json'
+// import data from '../resources/data.json'
 import EpisodeList from './EpisodeList'
 
 export default class CategoryList extends Component {
   constructor(props) {
     super(props)
-    let dataSource = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1.guid !== r2.guid
-    }) 
-    this.state = {
-      dataSource: dataSource.cloneWithRows(data.data)
-    }
+    this.dataSource = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1.id !== r2.id
+    })
+    // console.log(props);
+    // this.state = {
+    //   dataSource: dataSource.cloneWithRows(props.pods)
+    // }
+  }
+
+  // componentWillMount() {
+  //   console.log(this.props);
+  //   this.state = {
+  //     dataSource: this.dataSource.cloneWithRows(this.props.pods)
+  //   }
+  // }
+
+  _updateList(pod) {
+    this.props.action.fetchEpisodes(pod.title)
   }
 
   _rowPressed(categoryId) {
-    let topic = data.data.filter(topic => topic.id === categoryId)[0]
+    let pod = this.props.pods.filter(pod => pod.id === categoryId)[0]
+
+    console.log(this.props.episodes);
 
     this.props.navigator.push({
-      title: topic.title + " List",
+      title: pod.title + " List",
       component: EpisodeList,
-      passProps: {topic: topic}
+      passProps: {
+        pod: pod,
+        // updateList: this._updateList,
+        action: this.props.action,
+        episodes: this.props.episodes
+      }
     })
   }
 
-  _renderRow(rowData, sectionID, rowID) { 
+  _renderRow(rowData, sectionID, rowID) {
     return (
       <TouchableHighlight onPress={() => this._rowPressed(rowData.id)}
           underlayColor='#dddddd'>
@@ -50,10 +69,18 @@ export default class CategoryList extends Component {
     )
   }
 
+  componentWillReceiveProps(nextProps) {
+
+  }
+
   render() {
+    console.log(this.props);
+    let dataSource = this.dataSource.cloneWithRows(this.props.pods);
+
     return (
-      <ListView dataSource={this.state.dataSource}
-        renderRow={this._renderRow.bind(this)} />
+      <ListView dataSource={dataSource}
+        renderRow={this._renderRow.bind(this)}
+        enableEmptySections/>
     )
   }
 }
