@@ -48,10 +48,6 @@ export default class CategoryList extends Component {
     )
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
-
   render() {
     console.log(this.props);
     let dataSource = this.dataSource.cloneWithRows(this.props.pods);

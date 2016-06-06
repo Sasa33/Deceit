@@ -67,8 +67,6 @@ class App extends Component{
 
   _renderScene(route, navigator) {
     let Component = route.component;
-    console.log(route.params);
-    console.log(this.props);
     return <Component navigator={navigator}
             {...route.params}
             {...this.props}
@@ -80,10 +78,7 @@ class App extends Component{
       <Navigator
         initialRoute={{
           name: 'Topics',
-          component: CategoryList,
-          params: {
-            pods: this.props.pods
-          }
+          component: CategoryList
         }}
         navigationBar={this._renderNavBar()}
         sceneStyle={{paddingTop: (Platform.OS === 'android' ? 66 : 74)}}

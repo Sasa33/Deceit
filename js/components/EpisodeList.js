@@ -20,10 +20,6 @@ class EpisodeList extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps');
-  }
-
   componentDidMount() {
     this.props.action.fetchEpisodes(this.props.pod.title)
   }
