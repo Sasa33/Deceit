@@ -46,7 +46,7 @@ export default class CategoryList extends Component {
       console.log(nextProps);
 
       nextProps.navigator.replace({
-        title: pod.title + " List2",
+        title: pod.title + " List",
         component: EpisodeList,
         passProps: {
           pod: pod,
@@ -76,7 +76,13 @@ export default class CategoryList extends Component {
   }
 
   render() {
-    let dataSource = this.dataSource.cloneWithRows(this.props.pods);
+    console.log(this.props);
+    let dataSource
+    if(this.props.pods) {
+      dataSource = this.dataSource.cloneWithRows(this.props.pods)
+    } else {
+      dataSource = this.dataSource.cloneWithRows([])
+    }
 
     return (
       <ListView dataSource={dataSource}

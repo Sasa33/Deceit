@@ -2,7 +2,8 @@ import React, {
   Component,
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  NavigatorIOS
 } from 'react-native'
 
 import { connect } from 'react-redux'
@@ -16,9 +17,47 @@ class App extends Component{
     this.props.action.fetchPods();
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props);
+    console.log(nextProps);
+    console.log(this);
+    if(this.props.pods != nextProps.pods) {
+      this.refs.nav.replace({
+        title: 'Topics',
+        component: CategoryList,
+        passProps: {
+          action: nextProps.action,
+          pods: nextProps.pods,
+          episodes: nextProps.episodes
+        }
+      })
+    } else if (this.props.episodes != nextProps.episodes) {
+      this.refs.nav.replacePrevious({
+        title: 'Topics',
+        component: CategoryList,
+        passProps: {
+          action: nextProps.action,
+          pods: nextProps.pods,
+          episodes: nextProps.episodes
+        }
+      })
+    }
+  }
+
   render() {
+    console.log(this.props);
     return (
-      <CategoryList {...this.props} />
+      <NavigatorIOS ref='nav'
+        style={styles.container}
+        initialRoute={{
+          title: 'Topics',
+          component: CategoryList,
+          passProps: {
+            action: this.props.action,
+            pods: this.props.pods,
+            episodes: this.props.episodes
+          }
+        }} />
     )
   }
 }
@@ -35,5 +74,11 @@ const mapDispatchToProps = (dispatch) => {
     action: bindActionCreators({ fetchPods, fetchEpisodes }, dispatch)
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
