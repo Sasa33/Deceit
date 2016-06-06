@@ -31,7 +31,7 @@ export default class EpisodeView extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    marginTop: 65
+    // marginTop: 65
   },
   heading: {
     backgroundColor: '#F8F8F8',
