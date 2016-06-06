@@ -19,46 +19,7 @@ class App extends Component{
     this.props.action.fetchPods();
   }
 
-  _renderScene(route, navigator) {
-    console.log(route);
-    console.log(navigator);
-    console.log(this);
-    console.log(this.props);
-    switch (route.name) {
-      case 'Topics':
-      console.log('CategoryList');
-        return (
-          <CategoryList
-            navigator={navigator}
-            {...this.props}
-          />
-        )
-      case 'EpisodeList':
-      console.log('EpisodeList');
-        return (
-          <EpisodeList
-            navigator={navigator}
-            {...this.props}
-          />
-        )
-      default:
-
-    }
-  }
-
   _renderNavBar() {
-    const styles = {
-      title: {
-        flex: 1, alignItems: 'center', justifyContent: 'center'
-      },
-      button: {
-        flex: 1, width: 50, alignItems: 'center', justifyContent: 'center'
-      },
-      buttonText: {
-        fontSize: 18, color: '#FFFFFF', fontWeight: '400'
-      }
-    }
-
     let routeMapper = {
       LeftButton(route, navigator, index, navState) {
         if(index > 0) {
@@ -98,47 +59,36 @@ class App extends Component{
 
     return (
       <Navigator.NavigationBar
-        style={{
-          alignItems: 'center',
-          backgroundColor: '#55ACEE',
-          shadowOffset:{
-              width: 1,
-              height: 0.5,
-          },
-          shadowColor: '#55ACEE',
-          shadowOpacity: 0.8,
-          }}
+        style={styles.navBar}
         routeMapper={routeMapper}
       />
     )
   }
 
-  render() {
+  _renderScene(route, navigator) {
+    let Component = route.component;
+    console.log(route.params);
     console.log(this.props);
+    return <Component navigator={navigator}
+            {...route.params}
+            {...this.props}
+          />
+  }
+
+  render() {
     return (
       <Navigator
         initialRoute={{
           name: 'Topics',
-          component: CategoryList
+          component: CategoryList,
+          params: {
+            pods: this.props.pods
+          }
         }}
         navigationBar={this._renderNavBar()}
-        // renderScene={this._renderScene}
         sceneStyle={{paddingTop: (Platform.OS === 'android' ? 66 : 74)}}
         renderScene={
-          (route, navigator) => {
-            let Component = route.component;
-            console.log(route.params);
-            return <Component
-                    {...route.params}
-                    navigator={navigator}
-                    {...this.props}
-                    onBack={() => {
-                      if(navigator) {
-                        navigator.pop()
-                      }
-                    }}
-                  />
-          }
+          this._renderScene.bind(this)  // remeber to bind this!!!
         }
       />
     )
@@ -158,5 +108,34 @@ const mapDispatchToProps = (dispatch) => {
     action: bindActionCreators({ fetchPods, fetchEpisodes }, dispatch)
   }
 }
+
+const styles = StyleSheet.create({
+  navBar: {
+    alignItems: 'center',
+    backgroundColor: '#55ACEE',
+    shadowOffset:{
+      width: 1,
+      height: 0.5,
+    },
+    shadowColor: '#55ACEE',
+    shadowOpacity: 0.8,
+  },
+  title: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  button: {
+    flex: 1,
+    width: 50,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#FFFFFF',
+    fontWeight: '400'
+  }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -27,17 +27,7 @@ export default class CategoryList extends Component {
       params: {
         pod: pod
       }
-    });
-
-    // this.props.navigator.push({
-    //   title: pod.title + " List",
-    //   component: EpisodeList,
-    //   passProps: {
-    //     pod: pod,
-    //     store: this.props.store,
-    //     action: this.props.action
-    //   }
-    // })
+    })
   }
 
   _renderRow(rowData, sectionID, rowID) {
