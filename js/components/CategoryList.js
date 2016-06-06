@@ -22,14 +22,22 @@ export default class CategoryList extends Component {
     let pod = this.props.pods.filter(pod => pod.id === categoryId)[0]
 
     this.props.navigator.push({
-      title: pod.title + " List",
+      name: pod.title + "List",
       component: EpisodeList,
-      passProps: {
-        pod: pod,
-        store: this.props.store,
-        action: this.props.action
+      params: {
+        pod: pod
       }
-    })
+    });
+
+    // this.props.navigator.push({
+    //   title: pod.title + " List",
+    //   component: EpisodeList,
+    //   passProps: {
+    //     pod: pod,
+    //     store: this.props.store,
+    //     action: this.props.action
+    //   }
+    // })
   }
 
   _renderRow(rowData, sectionID, rowID) {
@@ -55,6 +63,7 @@ export default class CategoryList extends Component {
   }
 
   render() {
+    console.log(this.props);
     let dataSource = this.dataSource.cloneWithRows(this.props.pods);
 
     return (

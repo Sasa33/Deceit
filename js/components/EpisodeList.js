@@ -32,9 +32,11 @@ class EpisodeList extends Component {
     let episode = this.props.episodes.filter(ep => ep.podId === episodeId)[0]
 
     this.props.navigator.push({
-      title: episode.podTitle,
+      name: episode.podTitle,
       component: EpisodeView,
-      passProps: {episode: episode}
+      params: {
+        episode: episode
+      }
     })
   }
 

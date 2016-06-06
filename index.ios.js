@@ -5,31 +5,9 @@
 
 import React, {
   AppRegistry,
-  Component,
-  StyleSheet,
-  Text,
-  NavigatorIOS
 } from 'react-native';
 
-import Root from './js/index';
+import Root from './js/setup';
 
 
-class Deceit extends Component {
-  render() {
-    return (
-      <NavigatorIOS style={styles.container} 
-        initialRoute={{
-          title: 'Topics', 
-          component: Root
-        }} />
-    )
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  }
-});
-
-AppRegistry.registerComponent('Deceit', () => Deceit);
+AppRegistry.registerComponent('Deceit', () => Root);
