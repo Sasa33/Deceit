@@ -25,6 +25,7 @@ class EpisodeList extends Component {
   }
 
   componentDidMount() {
+    console.log('mounted');
     this.props.action.fetchEpisodes(this.props.pod.title)
   }
 
@@ -51,6 +52,9 @@ class EpisodeList extends Component {
   }
 
   render() {
+    console.log(this.props);
+    console.log(this.props.episodes)
+
     let dataSource = this.dataSource.cloneWithRows(this.props.episodes)
 
     return (
@@ -93,4 +97,4 @@ const mapStateToProps = (state) => {
   };
 }
 
-export default connect(mapStateToProps)(EpisodeList)
+export default EpisodeList

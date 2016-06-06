@@ -16,20 +16,45 @@ export default class CategoryList extends Component {
     this.dataSource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1.id !== r2.id
     })
+    this.state = {
+      pod: []
+    }
   }
 
   _rowPressed(categoryId) {
     let pod = this.props.pods.filter(pod => pod.id === categoryId)[0]
+    this.setState({pod: pod})
+
+    console.log('test');
 
     this.props.navigator.push({
       title: pod.title + " List",
       component: EpisodeList,
       passProps: {
         pod: pod,
-        store: this.props.store,
-        action: this.props.action
+        action: this.props.action,
+        episodes: this.props.episodes
       }
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props.episodes != nextProps.episodes) {
+      let pod = this.state.pod
+      console.log(pod);
+      console.log(this.props);
+      console.log(nextProps);
+
+      nextProps.navigator.replace({
+        title: pod.title + " List2",
+        component: EpisodeList,
+        passProps: {
+          pod: pod,
+          action: this.props.action,
+          episodes: nextProps.episodes
+        }
+      })
+    }
   }
 
   _renderRow(rowData, sectionID, rowID) {
@@ -48,10 +73,6 @@ export default class CategoryList extends Component {
         </View>
       </TouchableHighlight>
     )
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
   }
 
   render() {
