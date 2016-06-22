@@ -61,10 +61,10 @@ class Nav extends Component{
 
   _renderScene(route, navigator) {
     let Component = route.component;
-    return <Component navigator={navigator}
+    return (<Component navigator={navigator}
             {...route.params}
             {...this.props}
-          />
+          />)
   }
 
   render() {

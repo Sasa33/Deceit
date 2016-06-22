@@ -31,12 +31,13 @@ export default class CategoryList extends Component {
   }
 
   _renderRow(rowData, sectionID, rowID) {
+    console.log(rowData);
     return (
       <TouchableHighlight onPress={() => this._rowPressed(rowData.id)}
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>
-            <Image style={styles.image} source={{ uri: rowData.image }} />
+            <Image style={styles.image} source={{ uri: rowData.coverImage }} />
             <View style={styles.textContainer}>
               <Text style={styles.title} numberOfLines={1}>{rowData.title}</Text>
               <Text style={styles.description}>{rowData.description}</Text>
@@ -72,16 +73,18 @@ var styles = StyleSheet.create({
     marginRight: 10,
   },
   textContainer: {
-    flex: 1,
+    height: 80,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
   },
   title: {
     fontSize: 25,
     fontWeight: 'bold',
-    color: '#48BBEC'
+    color: '#48BBEC',
   },
   description: {
     fontSize: 18,
-    color: '#656565'
+    color: '#656565',
   },
   separator: {
     height: 1,
