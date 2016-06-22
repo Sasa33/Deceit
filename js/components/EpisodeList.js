@@ -70,10 +70,10 @@ var styles = StyleSheet.create({
   },
   lineContainer: {
     // padding: 10
+    backgroundColor: 'white'
   },
   text: {
     color: '#656565',
-    // backgroundColor: 'white',
     fontSize: 18,
     padding: 15
 
