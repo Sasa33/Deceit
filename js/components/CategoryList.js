@@ -22,7 +22,7 @@ export default class CategoryList extends Component {
     let pod = this.props.pods.filter(pod => pod.id === categoryId)[0]
 
     this.props.navigator.push({
-      name: pod.title + "List",
+      name: pod.title + " List",
       component: EpisodeList,
       params: {
         pod: pod
@@ -72,7 +72,7 @@ var styles = StyleSheet.create({
     marginRight: 10,
   },
   textContainer: {
-    flex: 1
+    flex: 1,
   },
   title: {
     fontSize: 25,

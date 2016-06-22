@@ -19,7 +19,6 @@ export default class EpisodeView extends Component {
       <View style={styles.container}>
         <View style={styles.heading}>
           <Text style={styles.title}>{episode.podTitle}</Text>
-          <View style={styles.separator}/>
         </View>
         <Media audio={episode.podAudio}/>
         <Text style={styles.description}>{episode.podParagraph}</Text>
@@ -31,17 +30,11 @@ export default class EpisodeView extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    // marginTop: 65
   },
   heading: {
-    backgroundColor: '#F8F8F8',
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#DDDDDD'
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     margin: 5,
     color: '#656565'
   },
@@ -49,6 +42,6 @@ var styles = StyleSheet.create({
     fontSize: 18,
     margin: 5,
     marginTop: 20,
-    color: '#656565'
+    color: '#656565',
   }
 })

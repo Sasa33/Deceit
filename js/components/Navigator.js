@@ -75,7 +75,8 @@ class Nav extends Component{
           component: CategoryList
         }}
         navigationBar={this._renderNavBar()}
-        sceneStyle={{paddingTop: (Platform.OS === 'android' ? 66 : 74)}}
+        sceneStyle={{paddingTop: (Platform.OS === 'android' ? 66 : 74),
+            backgroundColor: 'white'}}
         renderScene={
           this._renderScene.bind(this)  // remeber to bind this!!!
         }

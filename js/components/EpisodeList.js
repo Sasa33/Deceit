@@ -28,7 +28,7 @@ class EpisodeList extends Component {
     let episode = this.props.episodes.filter(ep => ep.podId === episodeId)[0]
 
     this.props.navigator.push({
-      name: episode.podTitle,
+      name: this.props.pod.title,
       component: EpisodeView,
       params: {
         episode: episode
@@ -69,8 +69,6 @@ var styles = StyleSheet.create({
     marginTop: 70
   },
   lineContainer: {
-    // padding: 10
-    backgroundColor: 'white'
   },
   text: {
     color: '#656565',
