@@ -31,7 +31,6 @@ export default class CategoryList extends Component {
   }
 
   _renderRow(rowData, sectionID, rowID) {
-    console.log(rowData);
     return (
       <TouchableHighlight onPress={() => this._rowPressed(rowData.id)}
           underlayColor='#dddddd'>
