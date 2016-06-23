@@ -12,7 +12,7 @@ import EpisodeView from './EpisodeView'
 import { connect } from 'react-redux'
 
 
-class EpisodeList extends Component {
+export default class EpisodeList extends Component {
   constructor(props) {
     super(props)
     this.dataSource = new ListView.DataSource({
@@ -81,12 +81,3 @@ var styles = StyleSheet.create({
     backgroundColor: '#dddddd'
   },
 })
-
-
-const mapStateToProps = (state) => {
-  return {
-    episodes: state.episodes
-  };
-}
-
-export default connect(mapStateToProps)(EpisodeList)
