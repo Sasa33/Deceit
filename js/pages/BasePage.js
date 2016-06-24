@@ -6,18 +6,8 @@ import React, {
   StyleSheet,
   TouchableOpacity
 } from 'react-native'
-import Platform from 'Platform'
 
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-
-import TabView from './TabView'
-import CategoryList from './CategoryList'
-
-import { switchTab } from '../actions/navigation'
-
-class Nav extends Component{
-
+export default class extends Component{
   _renderNavBar() {
     let routeMapper = {
       LeftButton(route, navigator, index, navState) {
@@ -50,7 +40,7 @@ class Nav extends Component{
       Title(route, navigator, index, navState) {
         return (
           <View style={styles.title}>
-            <Text style={styles.buttonText}>{route.name ? route.name : 'Topics'}</Text>
+            <Text style={styles.buttonText}>{route.name}</Text>
           </View>
         );
       }
@@ -65,39 +55,27 @@ class Nav extends Component{
   }
 
   _renderScene(route, navigator) {
-    // let Component = route.component;
-    // return (<Component navigator={navigator}
-    //         {...route.params}
-    //         {...this.props}
-    //       />)
-    // switch (expression) {
-    //   case expression:
-    //
-    //     break;
-    //   default:
-    //
-    // }
-    return <TabView navigator={navigator} {...route.params} {...this.props}></TabView>
+    let Component = route.component;
+    return (<Component navigator={navigator}
+            {...route.params}
+            {...this.props}
+          />)
   }
 
   render() {
     return (
       <Navigator
-        initialRoute={{
-          name: 'Topics',
-          component: CategoryList
-        }}
+        initialRoute={ this.props.initialRoute }
         navigationBar={this._renderNavBar()}
-        sceneStyle={{paddingTop: (Platform.OS === 'android' ? 66 : 74),
+        sceneStyle={{paddingTop: 74,
             backgroundColor: 'white'}}
         renderScene={
-          this._renderScene.bind(this)  // remeber to bind this!!!
+          this._renderScene.bind(this)
         }
       />
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   navBar: {
@@ -127,5 +105,3 @@ const styles = StyleSheet.create({
     fontWeight: '400'
   }
 })
-
-export default Nav
