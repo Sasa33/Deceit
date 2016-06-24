@@ -40,8 +40,11 @@ export default class EpisodeList extends Component {
     return (
       <TouchableHighlight onPress={() => this._rowPressed(rowData.podId)}
           underlayColor='#dddddd'>
-        <View style={styles.lineContainer}>
-          <Text style={styles.text} numberOfLines={1}>{rowData.podTitle}</Text>
+        <View>
+          <View style={styles.lineContainer}>
+            <Text style={styles.text} numberOfLines={1}>{rowData.podTitle}</Text>
+            <Text style={styles.downloadButton}>Download</Text>
+          </View>
           <View style={styles.separator}/>
         </View>
       </TouchableHighlight>
@@ -69,12 +72,19 @@ var styles = StyleSheet.create({
     marginTop: 70
   },
   lineContainer: {
+    flexDirection: 'row',
   },
   text: {
     color: '#656565',
     fontSize: 18,
     padding: 15
-
+  },
+  downloadButton: {
+    backgroundColor: '#cccccc',
+    height: 30,
+    width: 80,
+    textAlign: 'center',
+    alignSelf: 'flex-end'
   },
   separator: {
     height: 1,

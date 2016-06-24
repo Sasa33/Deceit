@@ -6,19 +6,30 @@ import React, {
   Image,
   Text,
   View,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  TouchableHighlight
 } from 'react-native'
 
 import RNFetchBlob from 'react-native-fetch-blob'
 
 import Media from './Media'
+import { removeCacheList } from '../localStorage'
 
 export default class EpisodeView extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isDownloading: true,
-      filePath: ''
+      isDownloading: false,
+      filePath: '',
+      isDownloaded: false,
+    }
+  }
+
+  _checkIfAlreadyExisted(uuid) {
+    if (this.props.cacheList.filter((e) => e.uuid == uuid).length > 0) {
+      return true
+    } else {
+      return false
     }
   }
 
@@ -26,28 +37,45 @@ export default class EpisodeView extends Component {
     let episode = this.props.episode
 
     let dirs = RNFetchBlob.fs.dirs
-    let savePath = dirs.CacheDir + '/' + episode.podId + '.mp3'
+    let savePath = dirs.CacheDir + '/' + episode.uuid + '.mp3'
 
+    if(this._checkIfAlreadyExisted(episode.uuid)) {
+      this.setState({
+        filePath: savePath,
+        isDownloaded: true
+      })
+    } else {
+      this.setState({
+        filePath: savePath
+      })
+    }
+  }
+
+  _download(episode) {
     this.setState({
-      isDownloading: true,
-      filePath: savePath
+      isDownloading: true
     })
 
     RNFetchBlob
     .config({
-      // response data will be saved to this path if it has access right.
-      path: savePath
+      path: this.state.filePath
     })
     .fetch('GET', episode.podAudio , {
       //some headers ..
     })
     .progress((received, total) => {
-        console.log('progress', received / total)
+        console.log('progress' + (received / total))
     })
     .then((res) => {
       console.log('The file saved to ', res.path())
       this.setState({
-        isDownloading: false
+        isDownloading: false,
+        isDownloaded: true
+      })
+
+      this.props.action.addCache({
+        uuid: episode.uuid,
+        title: episode.podTitle
       })
     })
     .catch((err) => {
@@ -58,15 +86,23 @@ export default class EpisodeView extends Component {
     })
   }
 
-
+// <ActivityIndicatorIOS style={styles.centering} size="large" />
 
   render() {
     let episode = this.props.episode
 
-    let media = !this.state.isDownloading
+    let media = this.state.isDownloaded
         ? (<Media audio={this.state.filePath} />)
-        : (<ActivityIndicatorIOS style={styles.centering} size="large" />)
+        : (<Media audio={episode.podAudio} />)
 
+    let status = this.state.isDownloading ? 'Downloading' : 'Download'
+
+    let button = this.state.isDownloaded
+        ? (<Text style={styles.download}>is downloaded</Text>)
+        : (<TouchableHighlight onPress={this._download.bind(this, episode)}
+              style={styles.downloadButton}>
+              <Text style={styles.download}>{ status }</Text>
+            </TouchableHighlight>)
 
     return (
       <View style={styles.container}>
@@ -75,7 +111,11 @@ export default class EpisodeView extends Component {
         </View>
         { media }
         <Text style={styles.description}>{episode.podParagraph}</Text>
-      </View>
+        { button }
+        <Text onPress={removeCacheList}>
+          Press here to remove cacheList from storage.
+        </Text>
+    </View>
     )
   }
 }
@@ -103,4 +143,15 @@ var styles = StyleSheet.create({
     padding: 8,
     height: 200,
   },
+  downloadButton: {
+    width: 100,
+    height: 50,
+    marginTop: 20,
+    backgroundColor: '#cccccc',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  download: {
+    textAlign: 'center'
+  }
 })
