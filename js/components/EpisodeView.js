@@ -1,7 +1,7 @@
 'use strict'
 
-import React, {
-  Component,
+import React, { Component } from 'react'
+import {
   StyleSheet,
   Image,
   Text,
@@ -15,50 +15,57 @@ import RNFetchBlob from 'react-native-fetch-blob'
 import Media from './Media'
 import { removeCacheList } from '../localStorage'
 
+let filePath = ''
+let isDownloaded = false
+let isDownloading = false
+
 export default class EpisodeView extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      isDownloading: false,
-      filePath: '',
-      isDownloaded: false,
-    }
   }
 
   _checkIfAlreadyExisted(uuid) {
-    if (this.props.cacheList.filter((e) => e.uuid == uuid).length > 0) {
+    let cacheList = this.props.cacheList
+    let result = cacheList.filter(e => e.uuid == uuid)
+    if (result.length > 0 && result[0].status === 2) {
       return true
     } else {
       return false
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     let episode = this.props.episode
 
     let dirs = RNFetchBlob.fs.dirs
-    let savePath = dirs.CacheDir + '/' + episode.uuid + '.mp3'
+    filePath = dirs.CacheDir + '/' + episode.uuid + '.mp3'
 
     if(this._checkIfAlreadyExisted(episode.uuid)) {
-      this.setState({
-        filePath: savePath,
-        isDownloaded: true
-      })
+      isDownloaded = true
     } else {
-      this.setState({
-        filePath: savePath
-      })
+      isDownloaded = false
     }
   }
 
+  componentWillUnmount() {
+    console.log('will unmount');
+  }
+
   _download(episode) {
-    this.setState({
-      isDownloading: true
+    isDownloading = true
+
+    this.props.action.addCache({
+      uuid: episode.uuid,
+      podTitle: episode.podTitle,
+      podAudio: episode.podAudio,
+      podParagraph: episode.podParagraph,
+      status: 1
     })
+
 
     RNFetchBlob
     .config({
-      path: this.state.filePath
+      path: filePath
     })
     .fetch('GET', episode.podAudio , {
       //some headers ..
@@ -68,20 +75,21 @@ export default class EpisodeView extends Component {
     })
     .then((res) => {
       console.log('The file saved to ', res.path())
-      this.setState({
-        isDownloading: false,
-        isDownloaded: true
-      })
 
-      this.props.action.addCache({
+      isDownloading = false
+      isDownloaded = true
+
+      this.props.action.changeStatus({
         uuid: episode.uuid,
-        title: episode.podTitle
+        status: 2
       })
     })
     .catch((err) => {
       console.log(err)
-      this.setState({
-        isDownloading: false
+      isDownloading = false
+      this.props.action.changeStatus({
+        uuid: episode.uuid,
+        status: -1
       })
     })
   }
@@ -91,13 +99,13 @@ export default class EpisodeView extends Component {
   render() {
     let episode = this.props.episode
 
-    let media = this.state.isDownloaded
-        ? (<Media audio={this.state.filePath} />)
+    let media = isDownloaded
+        ? (<Media audio={filePath} />)
         : (<Media audio={episode.podAudio} />)
 
-    let status = this.state.isDownloading ? 'Downloading' : 'Download'
+    let status = isDownloading ? 'Downloading' : 'Download'
 
-    let button = this.state.isDownloaded
+    let button = isDownloaded
         ? (<Text style={styles.download}>is downloaded</Text>)
         : (<TouchableHighlight onPress={this._download.bind(this, episode)}
               style={styles.downloadButton}>
