@@ -1,4 +1,5 @@
-import { LOAD_CACHE_LIST, ADD_CACHE, CHANGE_STATUS } from '../actions/cache'
+import { LOAD_CACHE_LIST, ADD_A_CACHE, CHANGE_STATUS,
+          DELETE_A_CACHE, REMOVE_CACHE_LIST } from '../actions/cache'
 
 
 
@@ -9,7 +10,7 @@ const cacheList = (state = [], action) => {
       console.log(state)
       console.log(action.payload)
       return action.payload
-    case ADD_CACHE:
+    case ADD_A_CACHE:
       console.log(action);
       return [...state, action.payload]
     case CHANGE_STATUS:
@@ -18,6 +19,12 @@ const cacheList = (state = [], action) => {
         episode.uuid === action.payload.uuid
         ? Object.assign({}, episode, { status: action.payload.status })
         : episode
+      )
+    case REMOVE_CACHE_LIST:
+      return []
+    case DELETE_A_CACHE:
+      return state.filter(episode =>
+        episode.uuid !== action.payload.uuid
       )
     default:
       return state

@@ -3,7 +3,11 @@ import React, {
   AsyncStorage,
 } from 'react-native'
 
+import RNFetchBlob from 'react-native-fetch-blob'
+
+
 const STORAGE_KEY = 'cacheList'
+const SESSION_NAME = 'cachedFiles'
 
 const loadInitialCacheList = async (loadCacheList) => {
   console.log(loadCacheList)
@@ -35,9 +39,15 @@ const saveCacheList = async (cacheList) => {
   }
 }
 
-const removeCacheList = async () => {
-  console.log('remove cacheList...');
+const removeAllCaches = async (removeCacheList) => {
+  console.log('clear cacheList from store...');
+  removeCacheList()
+
+  console.log('deleting cached files...');
+  removeFiles()
+
   try {
+    console.log('remove cacheList...');
     await AsyncStorage.removeItem(STORAGE_KEY)
     console.log('cacheList is successfully removed');
   } catch (error) {
@@ -45,8 +55,33 @@ const removeCacheList = async () => {
   }
 }
 
+const removeFiles = () => {
+  RNFetchBlob.session(SESSION_NAME).dispose()
+}
+
+const removeOneCache = async (removeCache, episode) => {
+  console.log('clear one cache from store...');
+  removeCache(episode)
+
+  console.log('remove the path from session...')
+  let dirs = RNFetchBlob.fs.dirs
+  let filePath = dirs.CacheDir + '/' + episode.uuid + '.mp3'
+  RNFetchBlob.session(SESSION_NAME).remove(filePath)
+
+  removeOneFile(filePath)
+
+
+}
+
+const removeOneFile = (filePath) => {
+  RNFetchBlob.fs.unlink(filePath).then(() => {
+    // ...
+  })
+}
+
 export {
   loadInitialCacheList,
   saveCacheList,
-  removeCacheList
+  removeAllCaches,
+  removeOneCache
 }

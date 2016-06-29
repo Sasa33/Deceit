@@ -1,5 +1,7 @@
 export const LOAD_CACHE_LIST = 'LOAD_CACHE_LIST'
-export const ADD_CACHE = 'ADD_CACHE'
+export const REMOVE_CACHE_LIST = 'REMOVE_CACHE_LIST'
+export const ADD_A_CACHE = 'ADD_A_CACHE'
+export const DELETE_A_CACHE = 'DELETE_A_CACHE'
 export const CHANGE_STATUS = 'CHANGE_STATUS'
 
 export const loadCacheList = (cacheList) => {
@@ -11,7 +13,20 @@ export const loadCacheList = (cacheList) => {
 
 export const addCache = (episode) => {
   return {
-    type: ADD_CACHE,
+    type: ADD_A_CACHE,
+    payload: episode
+  }
+}
+
+export const removeCacheList = () => {
+  return {
+    type: REMOVE_CACHE_LIST
+  }
+}
+
+export const removeCache = (episode) => {
+  return {
+    type: DELETE_A_CACHE,
     payload: episode
   }
 }

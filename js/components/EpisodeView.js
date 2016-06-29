@@ -13,7 +13,7 @@ import {
 import RNFetchBlob from 'react-native-fetch-blob'
 
 import Media from './Media'
-import { removeCacheList } from '../localStorage'
+import { removeAllCaches, removeOneCache } from '../localStorage'
 
 let filePath = ''
 let isDownloaded = false
@@ -83,6 +83,9 @@ export default class EpisodeView extends Component {
         uuid: episode.uuid,
         status: 2
       })
+
+      RNFetchBlob.session('cachedFiles').add(res.path())
+
     })
     .catch((err) => {
       console.log(err)
@@ -120,8 +123,15 @@ export default class EpisodeView extends Component {
         { media }
         <Text style={styles.description}>{episode.podParagraph}</Text>
         { button }
-        <Text onPress={removeCacheList}>
+
+        <Text onPress={() => removeAllCaches(this.props.action.removeCacheList)}
+          style={{marginTop: 20}} >
           Press here to remove cacheList from storage.
+        </Text>
+
+        <Text onPress={() => removeOneCache(this.props.action.removeCache, episode)}
+          style={{marginTop: 20}} >
+          Press here to remove this episode from storage.
         </Text>
     </View>
     )
