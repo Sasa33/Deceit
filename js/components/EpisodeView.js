@@ -71,9 +71,6 @@ export default class EpisodeView extends Component {
     .then((res) => {
       console.log('The file saved to ', res.path())
 
-      // isDownloading = false
-      // isDownloaded = true
-
       this.props.action.changeStatus({
         uuid: episode.uuid,
         status: 2
