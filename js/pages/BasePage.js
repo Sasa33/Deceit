@@ -67,7 +67,7 @@ export default class extends Component{
       <Navigator
         initialRoute={ this.props.initialRoute }
         navigationBar={this._renderNavBar()}
-        sceneStyle={{paddingTop: 74,
+        sceneStyle={{paddingTop: 64,
             backgroundColor: 'white'}}
         renderScene={
           this._renderScene.bind(this)

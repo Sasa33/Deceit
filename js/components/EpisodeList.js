@@ -43,7 +43,6 @@ export default class EpisodeList extends Component {
         <View>
           <View style={styles.lineContainer}>
             <Text style={styles.text} numberOfLines={1}>{rowData.podTitle}</Text>
-            <Text style={styles.downloadButton}>Download</Text>
           </View>
           <View style={styles.separator}/>
         </View>
@@ -73,6 +72,7 @@ var styles = StyleSheet.create({
   },
   lineContainer: {
     flexDirection: 'row',
+    paddingLeft: 15,
   },
   text: {
     color: '#656565',

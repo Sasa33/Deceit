@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     height: 200,
-    marginTop: 20
+    marginTop: 10
   },
   fullScreen: {
     position: 'absolute',

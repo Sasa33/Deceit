@@ -53,7 +53,7 @@ export default class CategoryList extends Component {
     let dataSource = this.dataSource.cloneWithRows(this.props.pods);
 
     return (
-      <ListView dataSource={dataSource}
+      <ListView style={styles.listView} dataSource={dataSource}
         renderRow={this._renderRow.bind(this)}
         enableEmptySections/>
     )
@@ -61,6 +61,9 @@ export default class CategoryList extends Component {
 }
 
 var styles = StyleSheet.create({
+  listView: {
+    marginTop: -20
+  },
   rowContainer: {
     flexDirection: 'row',
     padding: 10

@@ -116,12 +116,12 @@ export default class EpisodeView extends Component {
         { button }
 
         <Text onPress={() => removeAllCaches(this.props.action.removeCacheList)}
-          style={{marginTop: 20}} >
+          style={{marginTop: 20, paddingLeft: 20}} >
           Press here to remove cacheList from storage.
         </Text>
 
         <Text onPress={() => removeOneCache(this.props.action.removeCache, episode)}
-          style={{marginTop: 20}} >
+          style={{marginTop: 20, paddingLeft: 20}} >
           Press here to remove this episode from storage.
         </Text>
     </View>
@@ -137,12 +137,12 @@ var styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    margin: 5,
+    padding: 15,
     color: '#656565'
   },
   description: {
     fontSize: 18,
-    margin: 5,
+    padding: 15,
     marginTop: 20,
     color: '#656565',
   },
