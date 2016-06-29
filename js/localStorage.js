@@ -74,8 +74,13 @@ const removeOneCache = async (removeCache, episode) => {
 }
 
 const removeOneFile = (filePath) => {
-  RNFetchBlob.fs.unlink(filePath).then(() => {
-    // ...
+  RNFetchBlob.fs.unlink(filePath)
+  .then(() => {
+    console.log('successfully deleted a file ')
+  })
+  .catch((err) => {
+    console.log('deleting file error: ')
+    console.log(err)
   })
 }
 

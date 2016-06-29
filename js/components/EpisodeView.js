@@ -15,22 +15,25 @@ import RNFetchBlob from 'react-native-fetch-blob'
 import Media from './Media'
 import { removeAllCaches, removeOneCache } from '../localStorage'
 
-let filePath = ''
-let isDownloaded = false
-let isDownloading = false
 
 export default class EpisodeView extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      filePath: ''
+    }
   }
 
-  _checkIfAlreadyExisted(uuid) {
+  _checkEpisodeStatus(uuid) {
     let cacheList = this.props.cacheList
     let result = cacheList.filter(e => e.uuid == uuid)
     if (result.length > 0 && result[0].status === 2) {
-      return true
-    } else {
-      return false
+      return 'Downloaded'
+    } else if(result.length > 0 && result[0].status === 1) {
+      return 'Downloading'
+    }
+    else {
+      return 'Download'
     }
   }
 
@@ -38,22 +41,14 @@ export default class EpisodeView extends Component {
     let episode = this.props.episode
 
     let dirs = RNFetchBlob.fs.dirs
-    filePath = dirs.CacheDir + '/' + episode.uuid + '.mp3'
 
-    if(this._checkIfAlreadyExisted(episode.uuid)) {
-      isDownloaded = true
-    } else {
-      isDownloaded = false
-    }
+    this.setState({
+      filePath: dirs.CacheDir + '/' + episode.uuid + '.mp3'
+    })
   }
 
-  componentWillUnmount() {
-    console.log('will unmount');
-  }
 
   _download(episode) {
-    isDownloading = true
-
     this.props.action.addCache({
       uuid: episode.uuid,
       podTitle: episode.podTitle,
@@ -65,7 +60,7 @@ export default class EpisodeView extends Component {
 
     RNFetchBlob
     .config({
-      path: filePath
+      path: this.state.filePath
     })
     .fetch('GET', episode.podAudio , {
       //some headers ..
@@ -76,8 +71,8 @@ export default class EpisodeView extends Component {
     .then((res) => {
       console.log('The file saved to ', res.path())
 
-      isDownloading = false
-      isDownloaded = true
+      // isDownloading = false
+      // isDownloaded = true
 
       this.props.action.changeStatus({
         uuid: episode.uuid,
@@ -89,7 +84,6 @@ export default class EpisodeView extends Component {
     })
     .catch((err) => {
       console.log(err)
-      isDownloading = false
       this.props.action.changeStatus({
         uuid: episode.uuid,
         status: -1
@@ -101,18 +95,18 @@ export default class EpisodeView extends Component {
 
   render() {
     let episode = this.props.episode
+    let status = this._checkEpisodeStatus(episode.uuid)
 
-    let media = isDownloaded
-        ? (<Media audio={filePath} />)
+    let media = status === 'Downloaded'
+        ? (<Media audio={this.state.filePath} />)
         : (<Media audio={episode.podAudio} />)
 
-    let status = isDownloading ? 'Downloading' : 'Download'
 
-    let button = isDownloaded
-        ? (<Text style={styles.download}>is downloaded</Text>)
+    let button = status !== 'Download'
+        ? (<Text style={styles.download}>{ status }</Text>)
         : (<TouchableHighlight onPress={this._download.bind(this, episode)}
               style={styles.downloadButton}>
-              <Text style={styles.download}>{ status }</Text>
+              <Text style={styles.download}>Download</Text>
             </TouchableHighlight>)
 
     return (
