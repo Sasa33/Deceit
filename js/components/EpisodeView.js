@@ -6,11 +6,12 @@ import {
   Image,
   Text,
   View,
+  ScrollView,
   ActivityIndicatorIOS,
-  TouchableHighlight
 } from 'react-native'
 
 import RNFetchBlob from 'react-native-fetch-blob'
+import Button from 'apsl-react-native-button'
 
 import Media from './Media'
 import { removeAllCaches, removeOneCache } from '../localStorage'
@@ -101,13 +102,13 @@ export default class EpisodeView extends Component {
 
     let button = status !== 'Download'
         ? (<Text style={styles.download}>{ status }</Text>)
-        : (<TouchableHighlight onPress={this._download.bind(this, episode)}
+        : (<Button onPress={this._download.bind(this, episode)}
               style={styles.downloadButton}>
-              <Text style={styles.download}>Download</Text>
-            </TouchableHighlight>)
+              Download
+            </Button>)
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.heading}>
           <Text style={styles.title}>{episode.podTitle}</Text>
         </View>
@@ -115,16 +116,16 @@ export default class EpisodeView extends Component {
         <Text style={styles.description}>{episode.podParagraph}</Text>
         { button }
 
-        <Text onPress={() => removeAllCaches(this.props.action.removeCacheList)}
-          style={{marginTop: 20, paddingLeft: 20}} >
-          Press here to remove cacheList from storage.
-        </Text>
+        <Button onPress={() => removeAllCaches(this.props.action.removeCacheList)}
+          style={{margin: 15, backgroundColor: '#ff0000'}} >
+          Remove all cached files.
+        </Button>
 
-        <Text onPress={() => removeOneCache(this.props.action.removeCache, episode)}
-          style={{marginTop: 20, paddingLeft: 20}} >
-          Press here to remove this episode from storage.
-        </Text>
-    </View>
+        <Button onPress={() => removeOneCache(this.props.action.removeCache, episode)}
+          style={{margin: 15, backgroundColor: '#ff8000'}} >
+          Remove this episode from storage.
+        </Button>
+    </ScrollView>
     )
   }
 }
@@ -143,7 +144,7 @@ var styles = StyleSheet.create({
   description: {
     fontSize: 18,
     padding: 15,
-    marginTop: 20,
+    marginTop: 10,
     color: '#656565',
   },
   centering: {
@@ -153,14 +154,13 @@ var styles = StyleSheet.create({
     height: 200,
   },
   downloadButton: {
-    width: 100,
-    height: 50,
-    marginTop: 20,
-    backgroundColor: '#cccccc',
-    justifyContent: 'center',
-    alignSelf: 'center',
+    margin: 15,
+    backgroundColor: '#55ACEE',
   },
   download: {
-    textAlign: 'center'
+    margin: 15,
+    color: '#55ACEE',
+    textAlign: 'center',
+    fontSize: 20
   }
 })
