@@ -34,18 +34,19 @@ class Nav extends Component{
         }
       },
       RightButton(route, navigator, index, navState) {
-        if(index > 0 && route.rightButton) {
+        if(index > 0 && route.RightButton) {
           return (
             <TouchableOpacity
-              onPress={() => navigator.pop()}
+              onPress={() => {
+                route.component.onRightButton()
+              }}
               style={styles.button}>
-              <Text style={styles.buttonText}></Text>
+              <Text style={styles.buttonText}>Download</Text>
             </TouchableOpacity>
           )
         } else {
           return null
         }
-
       },
       Title(route, navigator, index, navState) {
         return (
@@ -85,7 +86,8 @@ class Nav extends Component{
       <Navigator
         initialRoute={{
           name: 'Topics',
-          component: CategoryList
+          component: CategoryList,
+          RightButton: 'Download'
         }}
         navigationBar={this._renderNavBar()}
         sceneStyle={{paddingTop: (Platform.OS === 'android' ? 66 : 74),

@@ -1,5 +1,5 @@
-import React, {
-  Component,
+import React, { Component } from 'react'
+import {
   View,
   Text,
   Navigator,
@@ -24,18 +24,19 @@ export default class extends Component{
         }
       },
       RightButton(route, navigator, index, navState) {
-        if(index > 0 && route.rightButton) {
+        if(index > 0 && route.RightButton) {
           return (
             <TouchableOpacity
-              onPress={() => navigator.pop()}
+              onPress={() => {
+                route.params.onRightButton()
+              }}
               style={styles.button}>
-              <Text style={styles.buttonText}></Text>
+              <Text style={styles.buttonText}>Download</Text>
             </TouchableOpacity>
           )
         } else {
           return null
         }
-
       },
       Title(route, navigator, index, navState) {
         return (

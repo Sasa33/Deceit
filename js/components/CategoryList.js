@@ -18,14 +18,22 @@ export default class CategoryList extends Component {
     })
   }
 
+  onRightButton() {
+    console.log('hhhhhhhhhhhhhhhhhhhhhh');
+  }
+
   _rowPressed(categoryId) {
     let pod = this.props.pods.filter(pod => pod.id === categoryId)[0]
 
     this.props.navigator.push({
       name: pod.title + " List",
       component: EpisodeList,
+      // RightButton: 'Download',
       params: {
-        pod: pod
+        pod: pod,
+        onRightButton: function() {
+          console.log('hhhhhhhhhhhhhhhhhhhhhh');
+        }
       }
     })
   }

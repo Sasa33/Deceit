@@ -1,6 +1,5 @@
-import React, {
-  Component,
-} from 'react-native'
+import React, { Component } from 'react'
+
 import Platform from 'Platform'
 
 import { connect } from 'react-redux'
