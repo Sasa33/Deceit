@@ -66,34 +66,26 @@ class Nav extends Component{
   }
 
   _renderScene(route, navigator) {
-    // let Component = route.component;
-    // return (<Component navigator={navigator}
-    //         {...route.params}
-    //         {...this.props}
-    //       />)
-    // switch (expression) {
-    //   case expression:
-    //
-    //     break;
-    //   default:
-    //
-    // }
-    return <TabView navigator={navigator} {...route.params} {...this.props}></TabView>
+    let Component = route.component;
+
+    if(Component) {
+      return (<Component navigator={navigator}
+        {...route.params}
+        {...this.props}
+        />)
+    }
+    return <TabView navigator={navigator}></TabView>
   }
 
   render() {
     return (
       <Navigator
-        initialRoute={{
-          name: 'Topics',
-          component: CategoryList,
-          RightButton: 'Download'
-        }}
+        initialRoute={{}}
         navigationBar={this._renderNavBar()}
         sceneStyle={{paddingTop: (Platform.OS === 'android' ? 66 : 74),
             backgroundColor: 'white'}}
         renderScene={
-          this._renderScene.bind(this)  // remeber to bind this!!!
+          this._renderScene.bind(this)
         }
       />
     )

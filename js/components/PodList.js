@@ -7,12 +7,7 @@ import {
   TouchableHighlight
 } from 'react-native'
 
-import EpisodeView from './EpisodeView'
-
-import { connect } from 'react-redux'
-
-
-export default class EpisodeList extends Component {
+export default class extends Component {
   constructor(props) {
     super(props)
     this.dataSource = new ListView.DataSource({
@@ -20,25 +15,13 @@ export default class EpisodeList extends Component {
     })
   }
 
-  componentDidMount() {
-    this.props.action.fetchEpisodes(this.props.pod.title)
-  }
-
-  _rowPressed(episodeId) {
-    let episode = this.props.episodes.filter(ep => ep.podId === episodeId)[0]
-
-    this.props.navigator.push({
-      name: this.props.pod.title,
-      component: EpisodeView,
-      params: {
-        episode: episode
-      }
-    })
+  _rowPressed(episode) {
+    this.props.onRowPressed(episode)
   }
 
   _renderRow(rowData, sectionID, rowID) {
     return (
-      <TouchableHighlight onPress={() => this._rowPressed(rowData.podId)}
+      <TouchableHighlight onPress={() => this.props.onRowPressed(rowData)}
           underlayColor='#dddddd'>
         <View>
           <View style={styles.lineContainer}>
@@ -51,7 +34,8 @@ export default class EpisodeList extends Component {
   }
 
   render() {
-    let dataSource = this.dataSource.cloneWithRows(this.props.episodes)
+    console.log(this.props.listData);
+    let dataSource = this.dataSource.cloneWithRows(this.props.listData)
 
     return (
       <ListView dataSource={dataSource}

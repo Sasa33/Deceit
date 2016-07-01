@@ -3,12 +3,9 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { fetchPods, fetchEpisodes } from '../actions/pods'
-import { loadCacheList, addCache, changeStatus,
-         removeCacheList, removeCache } from '../actions/cache'
+import { fetchPods } from '../actions/pods'
 import { loadInitialCacheList } from '../localStorage.js'
 import CategoryList from '../components/CategoryList'
-import BasePage from './BasePage'
 import CachedList from '../components/CachedList'
 
 class PodsListPage extends Component{
@@ -19,32 +16,20 @@ class PodsListPage extends Component{
   }
 
   render() {
-    return <BasePage initialRoute={{
-      name: 'Topics',
-      component: CategoryList
-    }} {...this.props} />
+    return <CategoryList {...this.props} />
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     pods: state.pods,
-    episodes: state.episodes,
-    cacheList: state.cacheList
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     action: bindActionCreators({
-      fetchPods,
-      fetchEpisodes,
-      loadCacheList,
-      addCache,
-      changeStatus,
-      removeCacheList,
-      removeCache
+      fetchPods
     }, dispatch)
   }
 }

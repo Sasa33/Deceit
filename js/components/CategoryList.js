@@ -8,7 +8,7 @@ import {
   Image
 } from 'react-native'
 
-import EpisodeList from './EpisodeList'
+import EpisodeListPage from '../pages/EpisodeListPage'
 
 export default class CategoryList extends Component {
   constructor(props) {
@@ -24,10 +24,9 @@ export default class CategoryList extends Component {
 
   _rowPressed(categoryId) {
     let pod = this.props.pods.filter(pod => pod.id === categoryId)[0]
-
     this.props.navigator.push({
       name: pod.title + " List",
-      component: EpisodeList,
+      component: EpisodeListPage,
       // RightButton: 'Download',
       params: {
         pod: pod,

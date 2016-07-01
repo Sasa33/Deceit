@@ -1,11 +1,8 @@
 import React from 'react'
+import { Text } from 'react-native'
 
-import BasePage from './BasePage'
 import CachedList from '../components/CachedList'
 
 export default () => {
-  return <BasePage initialRoute={{
-    name: 'CachedList',
-    component: CachedList
-  }} />
+  return (<Text>Hello</Text>)
 }

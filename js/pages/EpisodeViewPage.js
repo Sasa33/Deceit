@@ -16,7 +16,7 @@ import Button from 'apsl-react-native-button'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import Media from './Media'
+import Media from '../components/Media'
 import { removeAllCaches, removeOneCache } from '../localStorage'
 import { loadCacheList, addCache, changeStatus, removeCacheList, removeCache } from '../actions/cache'
 
