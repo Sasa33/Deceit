@@ -8,8 +8,11 @@ import {
   TouchableHighlight
 } from 'react-native'
 
+import RNFetchBlob from 'react-native-fetch-blob'
+
+
 const download_icon = 'http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Download-From-Cloud-icon.png'
-const downloading_icon = 'https://camo.githubusercontent.com/6ed028acbf67707d622344e0ef1bc3b098425b50/687474703a2f2f662e636c2e6c792f6974656d732f32473146315a304d306b306832553356317033392f535650726f67726573734855442e676966'
+const downloading_icon = 'http://img.blog.csdn.net/20140207122916390?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGl0d2h5bHo=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center'
 const delete_icon = 'http://www.iconarchive.com/download/i88581/icons8/ios7/Messaging-Trash.ico'
 
 export default class extends Component {
@@ -24,17 +27,64 @@ export default class extends Component {
     this.props.onRowPressed(episode)
   }
 
-  _download(episode) {
+  _onIconPressed(episode) {
+    if(episode.status === 0) {
+      this._download(episode)
+    } else if(episode.status === 2) {
+      this._delete(episode)
+    }
+  }
 
+  _download(episode) {
+    let dirs = RNFetchBlob.fs.dirs
+    let filePath = dirs.CacheDir + '/' + episode.uuid + '.mp3'
+
+    this.props.action.addCache({
+      uuid: episode.uuid,
+      podTitle: episode.podTitle,
+      podAudio: episode.podAudio,
+      podParagraph: episode.podParagraph,
+      status: 1
+    })
+
+
+    RNFetchBlob
+    .config({
+      path: filePath
+    })
+    .fetch('GET', episode.podAudio , {
+      //some headers ..
+    })
+    .progress((received, total) => {
+        console.log('progress' + (received / total))
+    })
+    .then((res) => {
+      console.log('The file saved to ', res.path())
+
+      this.props.action.changeStatus({
+        uuid: episode.uuid,
+        status: 2
+      })
+
+      RNFetchBlob.session('cachedFiles').add(res.path())
+
+    })
+    .catch((err) => {
+      console.log(err)
+      this.props.action.changeStatus({
+        uuid: episode.uuid,
+        status: -1
+      })
+    })
   }
 
   _getIconForEpisode(episode) {
     switch (episode.status) {
-      case 'Downloaded':
+      case 2:
         return delete_icon
-      case 'Downloading':
+      case 1:
         return downloading_icon
-      case 'Download':
+      case 0:
         return download_icon
       default:
         return download_icon
@@ -53,7 +103,7 @@ export default class extends Component {
             <View style={styles.separator}/>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this._download.bind(this, rowData)}>
+        <TouchableHighlight onPress={this._onIconPressed.bind(this, rowData)}>
           <Image source={{uri: icon}} style={styles.icon} />
         </TouchableHighlight>
       </View>
