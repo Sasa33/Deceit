@@ -28,21 +28,21 @@ export default class extends Component {
 
   }
 
-  _renderRow(rowData, sectionID, rowID) {
-    let icon
-    switch (rowData.status) {
+  _getIconForEpisode(episode) {
+    switch (episode.status) {
       case 'Downloaded':
-        icon = delete_icon
-        break
+        return delete_icon
       case 'Downloading':
-        icon = downloading_icon
-        break
+        return downloading_icon
       case 'Download':
-        icon = download_icon
-        break
+        return download_icon
       default:
-        icon = download_icon
+        return download_icon
     }
+  }
+
+  _renderRow(rowData, sectionID, rowID) {
+    let icon = this._getIconForEpisode(rowData)
 
     return (
       <View style={styles.rowContainer}>
