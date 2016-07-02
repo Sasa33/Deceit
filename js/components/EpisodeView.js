@@ -13,31 +13,14 @@ import {
 import RNFetchBlob from 'react-native-fetch-blob'
 import Button from 'apsl-react-native-button'
 
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-
 import Media from './Media'
-import { removeAllCaches, removeOneCache } from '../localStorage'
-import { loadCacheList, addCache, changeStatus, removeCacheList, removeCache } from '../actions/cache'
+import { removeOneCache } from '../localStorage'
 
 class EpisodeView extends Component {
   constructor(props) {
     super(props)
     this.state = {
       filePath: ''
-    }
-  }
-
-  _checkEpisodeStatus(uuid) {
-    let cacheList = this.props.cacheList
-    let result = cacheList.filter(e => e.uuid == uuid)
-    if (result.length > 0 && result[0].status === 2) {
-      return 'Downloaded'
-    } else if(result.length > 0 && result[0].status === 1) {
-      return 'Downloading'
-    }
-    else {
-      return 'Download'
     }
   }
 
@@ -96,7 +79,7 @@ class EpisodeView extends Component {
 
   render() {
     let episode = this.props.episode
-    let status = this._checkEpisodeStatus(episode.uuid)
+    let status = episode.status
 
     let media = status === 'Downloaded'
         ? (<Media audio={this.state.filePath} />)
@@ -110,6 +93,13 @@ class EpisodeView extends Component {
               Download
             </Button>)
 
+    let deleteButton = status === 'Downloaded'
+        ? (<Button onPress={() => removeOneCache(this.props.action.removeCache, episode)}
+              style={{margin: 15, backgroundColor: '#ff8000'}} >
+              Delete
+            </Button>)
+        : null
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.heading}>
@@ -118,16 +108,7 @@ class EpisodeView extends Component {
         { media }
         <Text style={styles.description}>{episode.podParagraph}</Text>
         { button }
-
-        <Button onPress={() => removeAllCaches(this.props.action.removeCacheList)}
-          style={{margin: 15, backgroundColor: '#ff0000'}} >
-          Remove all cached files.
-        </Button>
-
-        <Button onPress={() => removeOneCache(this.props.action.removeCache, episode)}
-          style={{margin: 15, backgroundColor: '#ff8000'}} >
-          Remove this episode from storage.
-        </Button>
+        { deleteButton }
     </ScrollView>
     )
   }
@@ -168,22 +149,5 @@ var styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state) => {
-  return {
-    cacheList: state.cacheList
-  }
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    action: bindActionCreators({
-      loadCacheList,
-      addCache,
-      changeStatus,
-      removeCacheList,
-      removeCache
-    }, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EpisodeView)
+export default EpisodeView

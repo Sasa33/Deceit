@@ -26,7 +26,7 @@ export default class extends Component {
   }
 
   _rowPressed(episode) {
-    this.props.onRowPressed(episode)
+    this.props.onRowPressed(episode, this.props.action)
   }
 
   _onIconPressed(episode) {
@@ -86,11 +86,11 @@ export default class extends Component {
 
   _getIconForEpisode(episode) {
     switch (episode.status) {
-      case 2:
+      case 'Downloaded':
         return delete_icon
-      case 1:
+      case 'Downloading':
         return downloading_icon
-      case 0:
+      case 'Download':
         return download_icon
       default:
         return download_icon

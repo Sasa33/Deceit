@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import PodList from '../components/PodList'
-import EpisodeViewPage from './EpisodeViewPage'
+import EpisodeView from '../components/EpisodeView'
 import { fetchEpisodes } from '../actions/pods'
 import { addCache, changeStatus, removeCache } from '../actions/cache'
 
@@ -28,28 +28,28 @@ export default class EpisodeListPage extends Component {
     this.props.action.fetchEpisodes(this.props.pod.title)
   }
 
-  _rowPressed(episode) {
+  _rowPressed(episode, cacheActions) {
     // let episode = this.props.episodes.filter(ep => ep.podId === episodeId)[0]
-    console.log(episode)
     this.props.navigator.push({
       name: this.props.pod.title,
-      component: EpisodeViewPage,
+      component: EpisodeView,
       params: {
-        episode: episode
+        episode: episode,
+        action: cacheActions
       }
     })
   }
 
   render() {
     const { episodes, action } = this.props;
-    cachActions = {
+    cacheActions = {
       addCache: action.addCache,
       changeStatus: action.changeStatus,
       removeCache: action.removeCache
     }
 
     return (
-      <PodList listData={ episodes } action={ cachActions }
+      <PodList listData={ episodes } action={ cacheActions }
         onRowPressed={ this._rowPressed.bind(this) } />
     )
   }
@@ -59,12 +59,12 @@ const getEpisodeStatus = (episode, cacheList) => {
   let uuid = episode.uuid
   let result = cacheList.filter(e => e.uuid == uuid)
   if (result.length > 0 && result[0].status === 2) {
-    return 2
+    return 'Downloaded'
   } else if(result.length > 0 && result[0].status === 1) {
-    return 1
+    return 'Downloading'
   }
   else {
-    return 0
+    return 'Download'
   }
 }
 
@@ -80,7 +80,7 @@ const decorateEachEpisode = (state) => {
 
 const mapStateToProps = (state) => {
   return {
-    episodes: decorateEachEpisode(state),
+    episodes: decorateEachEpisode(state)
   }
 }
 
