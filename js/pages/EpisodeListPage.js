@@ -46,10 +46,32 @@ export default class EpisodeListPage extends Component {
   }
 }
 
+const getEpisodeStatus = (episode, cacheList) => {
+  let uuid = episode.uuid
+  let result = cacheList.filter(e => e.uuid == uuid)
+  if (result.length > 0 && result[0].status === 2) {
+    return 'Downloaded'
+  } else if(result.length > 0 && result[0].status === 1) {
+    return 'Downloading'
+  }
+  else {
+    return 'Download'
+  }
+}
+
+const decorateEachEpisode = (state) => {
+  let { episodes, cacheList } = state
+
+  if(episodes) {
+    return episodes.map(e =>
+      Object.assign({}, e, {status: getEpisodeStatus(e, cacheList)})
+    )
+  }
+}
 
 const mapStateToProps = (state) => {
   return {
-    episodes: state.episodes
+    episodes: decorateEachEpisode(state),
   }
 }
 

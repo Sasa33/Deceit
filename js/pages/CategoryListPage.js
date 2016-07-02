@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { fetchPods } from '../actions/pods'
 import { loadInitialCacheList } from '../localStorage.js'
+import { loadCacheList } from '../actions/cache'
 import CategoryList from '../components/CategoryList'
 import CachedList from '../components/CachedList'
 
@@ -29,7 +30,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     action: bindActionCreators({
-      fetchPods
+      fetchPods,
+      loadCacheList
     }, dispatch)
   }
 }
