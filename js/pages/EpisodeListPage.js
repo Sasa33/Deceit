@@ -13,7 +13,7 @@ import { connect } from 'react-redux'
 import PodList from '../components/PodList'
 import EpisodeViewPage from './EpisodeViewPage'
 import { fetchEpisodes } from '../actions/pods'
-import { addCache, changeStatus } from '../actions/cache'
+import { addCache, changeStatus, removeCache } from '../actions/cache'
 
 
 export default class EpisodeListPage extends Component {
@@ -44,7 +44,8 @@ export default class EpisodeListPage extends Component {
     const { episodes, action } = this.props;
     cachActions = {
       addCache: action.addCache,
-      changeStatus: action.changeStatus
+      changeStatus: action.changeStatus,
+      removeCache: action.removeCache
     }
 
     return (
@@ -89,7 +90,7 @@ const mapDispatchToProps = (dispatch) => {
       fetchEpisodes,
       addCache,
       changeStatus,
-
+      removeCache
     }, dispatch)
   }
 }

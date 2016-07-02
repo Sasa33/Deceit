@@ -10,6 +10,8 @@ import {
 
 import RNFetchBlob from 'react-native-fetch-blob'
 
+import { removeOneCache } from '../localStorage'
+
 
 const download_icon = 'http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Download-From-Cloud-icon.png'
 const downloading_icon = 'http://img.blog.csdn.net/20140207122916390?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGl0d2h5bHo=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center'
@@ -76,6 +78,10 @@ export default class extends Component {
         status: -1
       })
     })
+  }
+
+  _delete(episode) {
+    removeOneCache(this.props.action.removeCache, episode)
   }
 
   _getIconForEpisode(episode) {
