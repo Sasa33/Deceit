@@ -1,8 +1,12 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
-import CachedList from '../components/CachedList'
+import CachedListPage from './CachedListPage'
 
-export default () => {
-  return (<Text>Hello</Text>)
+export default ({navigator}) => {
+  return (
+    <View>
+      <CachedListPage navigator={ navigator } />
+    </View>
+  )
 }

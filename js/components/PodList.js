@@ -15,10 +15,6 @@ export default class extends Component {
     })
   }
 
-  _rowPressed(episode) {
-    this.props.onRowPressed(episode)
-  }
-
   _renderRow(rowData, sectionID, rowID) {
     return (
       <TouchableHighlight onPress={() => this.props.onRowPressed(rowData)}

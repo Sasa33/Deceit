@@ -14,7 +14,7 @@ import PodList from '../components/PodList'
 import EpisodeViewPage from './EpisodeViewPage'
 import { fetchEpisodes } from '../actions/pods'
 
-export default class EpisodeListPage extends Component {
+export default class CachedListPage extends Component {
   constructor(props) {
     super(props)
     this.dataSource = new ListView.DataSource({
@@ -22,28 +22,25 @@ export default class EpisodeListPage extends Component {
     })
   }
 
-  componentDidMount() {
-    this.props.action.fetchEpisodes(this.props.pod.title)
-  }
+  // componentDidMount() {
+  //   this.props.action.fetchEpisodes(this.props.pod.title)
+  // }
 
   _rowPressed(episode) {
-    const podType = this.props.pod.title
-
     this.props.navigator.push({
-      name: podType,
+      name: episode.podType,
       component: EpisodeViewPage,
       params: {
-        podType: podType,
         episode: episode
       }
     })
   }
 
   render() {
-    const { episodes } = this.props;
+    const { cacheList } = this.props;
 
     return (
-      <PodList listData={ episodes } onRowPressed={ this._rowPressed.bind(this) } />
+      <PodList listData={ cacheList } onRowPressed={ this._rowPressed.bind(this) } />
     )
   }
 }
@@ -51,17 +48,8 @@ export default class EpisodeListPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    episodes: state.episodes
+    cacheList: state.cacheList
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    action: bindActionCreators({
-      fetchEpisodes,
-    }, dispatch)
-  }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(EpisodeListPage)
+export default connect(mapStateToProps)(CachedListPage)

@@ -55,12 +55,12 @@ class EpisodeView extends Component {
   _download(episode) {
     this.props.action.addCache({
       uuid: episode.uuid,
+      podType: this.props.podType,
       podTitle: episode.podTitle,
       podAudio: episode.podAudio,
       podParagraph: episode.podParagraph,
       status: 1
     })
-
 
     RNFetchBlob
     .config({

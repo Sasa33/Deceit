@@ -13,6 +13,7 @@
     "lodash": "^4.13.1",
     "react": "^0.14.8",
     "react-native": "^0.24.1",
+    "react-native-carousel": "^0.8.0",
     "react-native-fetch-blob": "^0.5.3",
     "react-native-video": "^0.7.1",
     "react-redux": "~4.3.0",
