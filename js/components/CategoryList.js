@@ -62,11 +62,11 @@ export default class CategoryList extends Component {
 
 var styles = StyleSheet.create({
   listView: {
-    marginTop: -20
+    marginTop: -10
   },
   rowContainer: {
     flexDirection: 'row',
-    padding: 10
+    padding: 10,
   },
   image: {
     width: 80,

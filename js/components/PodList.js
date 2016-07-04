@@ -86,16 +86,17 @@ export default class extends Component {
 
   _getIconForEpisode(episode) {
     switch (episode.status) {
-      case 'Downloaded':
+      case 2:
         return delete_icon
-      case 'Downloading':
+      case 1:
         return downloading_icon
-      case 'Download':
+      case 0:
         return download_icon
       default:
         return download_icon
     }
   }
+
 
   _renderRow(rowData, sectionID, rowID) {
     let icon = this._getIconForEpisode(rowData)

@@ -13,7 +13,9 @@ import {
 import RNFetchBlob from 'react-native-fetch-blob'
 import Button from 'apsl-react-native-button'
 
-import Media from './Media'
+import { connect } from 'react-redux'
+
+import Media from '../components/Media'
 import { removeOneCache } from '../localStorage'
 
 class EpisodeView extends Component {
@@ -21,6 +23,19 @@ class EpisodeView extends Component {
     super(props)
     this.state = {
       filePath: ''
+    }
+  }
+
+  _checkEpisodeStatus(uuid) {
+    let cacheList = this.props.cacheList
+    let result = cacheList.filter(e => e.uuid == uuid)
+    if (result.length > 0 && result[0].status === 2) {
+      return 'Downloaded'
+    } else if(result.length > 0 && result[0].status === 1) {
+      return 'Downloading'
+    }
+    else {
+      return 'Download'
     }
   }
 
@@ -38,12 +53,12 @@ class EpisodeView extends Component {
   _download(episode) {
     this.props.action.addCache({
       uuid: episode.uuid,
+      podType: this.props.podType,
       podTitle: episode.podTitle,
       podAudio: episode.podAudio,
       podParagraph: episode.podParagraph,
       status: 1
     })
-
 
     RNFetchBlob
     .config({
@@ -79,7 +94,7 @@ class EpisodeView extends Component {
 
   render() {
     let episode = this.props.episode
-    let status = episode.status
+    let status = this._checkEpisodeStatus(episode.uuid)
 
     let media = status === 'Downloaded'
         ? (<Media audio={this.state.filePath} />)
@@ -149,5 +164,11 @@ var styles = StyleSheet.create({
   }
 })
 
+const mapStateToProps = (state) => {
+  return {
+    cacheList: state.cacheList
+  }
+}
 
-export default EpisodeView
+
+export default connect(mapStateToProps)(EpisodeView)

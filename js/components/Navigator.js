@@ -51,7 +51,7 @@ class Nav extends Component{
       Title(route, navigator, index, navState) {
         return (
           <View style={styles.title}>
-            <Text style={styles.buttonText}>{route.name ? route.name : 'Topics'}</Text>
+            <Text style={styles.buttonText}>{route.name}</Text>
           </View>
         );
       }

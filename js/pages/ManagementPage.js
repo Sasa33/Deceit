@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { Text } from 'react-native'
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
-import CachedList from '../components/CachedList'
+import CachedListPage from './CachedListPage'
 
 import Button from 'apsl-react-native-button'
 
@@ -12,15 +12,16 @@ import { removeAllCaches, removeOneCache } from '../localStorage'
 import { removeCacheList, removeCache } from '../actions/cache'
 
 
-class ManagerPage extends Component {
-  render() {
-    return (
+const ManagerPage = ({navigator}) => {
+  return (
+    <View>
+      <CachedListPage navigator={ navigator } />
       <Button onPress={() => removeAllCaches(this.props.action.removeCacheList)}
         style={{margin: 15, backgroundColor: '#ff0000'}} >
         Remove all cached files.
       </Button>
-    )
-  }
+    </View>
+  )
 }
 
 const mapStateToProps = (state) => {

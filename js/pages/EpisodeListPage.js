@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import PodList from '../components/PodList'
-import EpisodeView from '../components/EpisodeView'
+import EpisodeViewPage from './EpisodeViewPage'
 import { fetchEpisodes } from '../actions/pods'
 import { addCache, changeStatus, removeCache } from '../actions/cache'
 
@@ -29,11 +29,13 @@ export default class EpisodeListPage extends Component {
   }
 
   _rowPressed(episode, cacheActions) {
-    // let episode = this.props.episodes.filter(ep => ep.podId === episodeId)[0]
+    const podType = this.props.pod.title
+
     this.props.navigator.push({
-      name: this.props.pod.title,
-      component: EpisodeView,
+      name: podType,
+      component: EpisodeViewPage,
       params: {
+        podType: podType,
         episode: episode,
         action: cacheActions
       }
@@ -59,12 +61,12 @@ const getEpisodeStatus = (episode, cacheList) => {
   let uuid = episode.uuid
   let result = cacheList.filter(e => e.uuid == uuid)
   if (result.length > 0 && result[0].status === 2) {
-    return 'Downloaded'
+    return 2
   } else if(result.length > 0 && result[0].status === 1) {
-    return 'Downloading'
+    return 1
   }
   else {
-    return 'Download'
+    return 0
   }
 }
 

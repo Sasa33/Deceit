@@ -1,8 +1,6 @@
 import { LOAD_CACHE_LIST, ADD_A_CACHE, CHANGE_STATUS,
           DELETE_A_CACHE, REMOVE_CACHE_LIST } from '../actions/cache'
 
-
-
 const cacheList = (state = [], action) => {
   switch (action.type) {
     case LOAD_CACHE_LIST:
