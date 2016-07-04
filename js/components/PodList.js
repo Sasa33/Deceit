@@ -30,9 +30,9 @@ export default class extends Component {
   }
 
   _onIconPressed(episode) {
-    if(episode.status === 'Download') {
+    if(episode.status === 0) {
       this._download(episode)
-    } else if(episode.status === 'Downloaded') {
+    } else if(episode.status === 2) {
       this._delete(episode)
     }
   }
