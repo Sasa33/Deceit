@@ -31,12 +31,14 @@ export default class CategoryList extends Component {
   }
 
   _renderRow(rowData, sectionID, rowID) {
+    const thumbImg = rowData.coverImage ? { uri: rowData.coverImage } : require('./img/thumb-category-default.jpg')
+
     return (
       <TouchableHighlight onPress={() => this._rowPressed(rowData.id)}
           underlayColor='#dddddd'>
         <View>
           <View style={styles.rowContainer}>
-            <Image style={styles.image} source={{ uri: rowData.coverImage }} />
+            <Image style={styles.image} source={ thumbImg } />
             <View style={styles.textContainer}>
               <Text style={styles.title} numberOfLines={1}>{rowData.title}</Text>
               <Text style={styles.description}>{rowData.description}</Text>
