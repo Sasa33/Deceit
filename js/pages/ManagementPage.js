@@ -12,14 +12,16 @@ import { removeAllCaches, removeOneCache } from '../localStorage'
 import { removeCacheList, removeCache } from '../actions/cache'
 
 
-const ManagerPage = ({navigator}) => {
+const ManagerPage = ({navigator, cacheList, action}) => {
+  const removeCacheButton = cacheList && cacheList.length ?
+                            <Button onPress={() => removeAllCaches(action.removeCacheList)}
+                             style={{margin: 15, backgroundColor: '#ff0000'}} >
+                             Remove all cached files.
+                            </Button> : null
   return (
     <View>
       <CachedListPage navigator={ navigator } />
-      <Button onPress={() => removeAllCaches(this.props.action.removeCacheList)}
-        style={{margin: 15, backgroundColor: '#ff0000'}} >
-        Remove all cached files.
-      </Button>
+      { removeCacheButton }
     </View>
   )
 }
