@@ -12,11 +12,6 @@ import RNFetchBlob from 'react-native-fetch-blob'
 
 import { removeOneCache } from '../localStorage'
 
-
-const download_icon = 'http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Download-From-Cloud-icon.png'
-const downloading_icon = 'http://img.blog.csdn.net/20140207122916390?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGl0d2h5bHo=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center'
-const delete_icon = 'http://www.iconarchive.com/download/i88581/icons8/ios7/Messaging-Trash.ico'
-
 export default class extends Component {
   constructor(props) {
     super(props)
@@ -87,13 +82,11 @@ export default class extends Component {
   _getIconForEpisode(episode) {
     switch (episode.status) {
       case 2:
-        return delete_icon
+        return require('./img/icon-delete.png')
       case 1:
-        return downloading_icon
-      case 0:
-        return download_icon
+        return require('./img/icon-downloading.gif')
       default:
-        return download_icon
+        return require('./img/icon-download.png')
     }
   }
 
@@ -111,7 +104,7 @@ export default class extends Component {
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={this._onIconPressed.bind(this, rowData)}>
-          <Image source={{uri: icon}} style={styles.icon} />
+          <Image source={ icon } style={styles.icon} />
         </TouchableHighlight>
       </View>
     )
