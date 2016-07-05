@@ -13,7 +13,8 @@ class PodsListPage extends Component{
   componentDidMount() {
     const { action } = this.props
     action.fetchPods();
-    loadInitialCacheList(action.loadCacheList).done()
+    // loadInitialCacheList(action.loadCacheList).done()
+    action.loadCacheList()
   }
 
   render() {
