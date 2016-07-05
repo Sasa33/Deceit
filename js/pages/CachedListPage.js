@@ -12,7 +12,8 @@ import { connect } from 'react-redux'
 
 import PodList from '../components/PodList'
 import EpisodeViewPage from './EpisodeViewPage'
-import { fetchEpisodes } from '../actions/pods'
+import { addCache, changeStatus, removeCache } from '../actions/cache'
+
 
 export default class CachedListPage extends Component {
   constructor(props) {
@@ -21,10 +22,6 @@ export default class CachedListPage extends Component {
       rowHasChanged: (r1, r2) => r1.id !== r2.id
     })
   }
-
-  // componentDidMount() {
-  //   this.props.action.fetchEpisodes(this.props.pod.title)
-  // }
 
   _rowPressed(episode) {
     this.props.navigator.push({
@@ -37,10 +34,11 @@ export default class CachedListPage extends Component {
   }
 
   render() {
-    const { cacheList } = this.props;
+    const { cacheList, action } = this.props;
 
     return (
-      <PodList listData={ cacheList } onRowPressed={ this._rowPressed.bind(this) } />
+      <PodList listData={ cacheList } action={ action }
+        onRowPressed={ this._rowPressed.bind(this) } />
     )
   }
 }
@@ -52,4 +50,14 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(CachedListPage)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    action: bindActionCreators({
+      addCache,
+      changeStatus,
+      removeCache
+    }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CachedListPage)
