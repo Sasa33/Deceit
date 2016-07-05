@@ -13,8 +13,7 @@ import { connect } from 'react-redux'
 import PodList from '../components/PodList'
 import EpisodeViewPage from './EpisodeViewPage'
 import { fetchEpisodes } from '../actions/pods'
-import { addCache, changeStatus, removeCache } from '../actions/cache'
-
+import { addCache, changeStatus, removeCache, removeCachedFile } from '../actions/cache'
 
 export default class EpisodeListPage extends Component {
   constructor(props) {
@@ -44,14 +43,8 @@ export default class EpisodeListPage extends Component {
 
   render() {
     const { episodes, action } = this.props;
-    cacheActions = {
-      addCache: action.addCache,
-      changeStatus: action.changeStatus,
-      removeCache: action.removeCache
-    }
-
     return (
-      <PodList listData={ episodes } action={ cacheActions }
+      <PodList listData={ episodes } action={ action }
         onRowPressed={ this._rowPressed.bind(this) } />
     )
   }
@@ -92,7 +85,8 @@ const mapDispatchToProps = (dispatch) => {
       fetchEpisodes,
       addCache,
       changeStatus,
-      removeCache
+      removeCache,
+      removeCachedFile
     }, dispatch)
   }
 }

@@ -1,6 +1,6 @@
 import { LOAD_CACHE_LIST, ADD_A_CACHE, CHANGE_STATUS,
           DELETE_A_CACHE, REMOVE_CACHE_LIST,
-          REMOVE_CACHE_FILES } from '../actions/cache'
+          REMOVE_CACHE_FILES, DELETE_A_CACHE_FILE } from '../actions/cache'
 
 const cacheList = (state = [], action) => {
   switch (action.type) {
@@ -22,6 +22,8 @@ const cacheList = (state = [], action) => {
       return state.filter(episode =>
         episode.uuid !== action.payload.uuid
       )
+    case DELETE_A_CACHE_FILE:
+      return state
     default:
       return state
   }

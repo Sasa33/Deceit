@@ -4,8 +4,10 @@ export const ADD_A_CACHE = 'ADD_A_CACHE'
 export const DELETE_A_CACHE = 'DELETE_A_CACHE'
 export const CHANGE_STATUS = 'CHANGE_STATUS'
 export const REMOVE_CACHE_FILES = 'REMOVE_CACHE_FILES'
+export const DELETE_A_CACHE_FILE = 'DELETE_A_CACHE_FILE'
 
-import { loadInitialCacheList, removeAllCaches } from '../localStorage'
+import { loadInitialCacheList, removeAllCaches,
+  removeOneCache } from '../localStorage'
 
 export const loadCacheList = () => {
   return async (dispatch) => {
@@ -43,6 +45,14 @@ export const removeCache = (episode) => {
   return {
     type: DELETE_A_CACHE,
     payload: episode
+  }
+}
+
+export const removeCachedFile = (episode) => {
+  removeOneCache(episode)
+
+  return {
+    type: DELETE_A_CACHE_FILE
   }
 }
 

@@ -76,7 +76,9 @@ export default class extends Component {
   }
 
   _delete(episode) {
-    removeOneCache(this.props.action.removeCache, episode)
+    const { removeCache, removeCachedFile } = this.props.action
+    removeCache(episode)
+    removeCachedFile(episode)
   }
 
   _getIconForEpisode(episode) {

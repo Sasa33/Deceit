@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 
 import PodList from '../components/PodList'
 import EpisodeViewPage from './EpisodeViewPage'
-import { addCache, changeStatus, removeCache } from '../actions/cache'
+import { addCache, changeStatus, removeCache, removeCachedFile } from '../actions/cache'
 
 
 export default class CachedListPage extends Component {
@@ -55,7 +55,8 @@ const mapDispatchToProps = (dispatch) => {
     action: bindActionCreators({
       addCache,
       changeStatus,
-      removeCache
+      removeCache,
+      removeCachedFile
     }, dispatch)
   }
 }

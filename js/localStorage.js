@@ -51,18 +51,13 @@ const removeFiles = () => {
   RNFetchBlob.session(SESSION_NAME).dispose()
 }
 
-const removeOneCache = async (removeCache, episode) => {
-  console.log('clear one cache from store...');
-  removeCache(episode)
-
+const removeOneCache = async (episode) => {
   console.log('remove the path from session...')
   let dirs = RNFetchBlob.fs.dirs
   let filePath = dirs.CacheDir + '/' + episode.uuid + '.mp3'
   RNFetchBlob.session(SESSION_NAME).remove(filePath)
 
   removeOneFile(filePath)
-
-
 }
 
 const removeOneFile = (filePath) => {

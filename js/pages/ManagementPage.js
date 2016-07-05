@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { removeOneCache } from '../localStorage'
-import { removeCacheList, removeCachedFiles, removeCache } from '../actions/cache'
+import { removeCacheList, removeCachedFiles, removeCache, removeCachedFile } from '../actions/cache'
 
 
 const ManagerPage = ({navigator, cacheList, action}) => {
@@ -39,8 +39,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     action: bindActionCreators({
       removeCacheList,
-      removeCachedFiles,
-      removeCache
+      removeCachedFiles
     }, dispatch)
   }
 }
