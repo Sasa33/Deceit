@@ -8,16 +8,19 @@ import Button from 'apsl-react-native-button'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { removeAllCaches, removeOneCache } from '../localStorage'
-import { removeCacheList, removeCache } from '../actions/cache'
+import { removeOneCache } from '../localStorage'
+import { removeCacheList, removeCachedFiles, removeCache } from '../actions/cache'
 
 
 const ManagerPage = ({navigator, cacheList, action}) => {
   const removeCacheButton = cacheList && cacheList.length ?
-                            <Button onPress={() => removeAllCaches(action.removeCacheList)}
-                             style={{margin: 15, backgroundColor: '#ff0000'}} >
-                             Remove all cached files.
-                            </Button> : null
+    <Button onPress={() => {
+        action.removeCacheList()
+        action.removeCachedFiles()
+      }}
+     style={{margin: 15, backgroundColor: '#ff0000'}} >
+     Remove all cached files.
+    </Button> : null
   return (
     <View>
       <CachedListPage navigator={ navigator } />
@@ -36,6 +39,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     action: bindActionCreators({
       removeCacheList,
+      removeCachedFiles,
       removeCache
     }, dispatch)
   }
