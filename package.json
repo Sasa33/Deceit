@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "lint": "eslint js"
   },
   "dependencies": {
     "apsl-react-native-button": "^2.5.0",
@@ -21,5 +22,11 @@
     "redux-logger": "~2.5.0",
     "redux-thunk": "~1.0.3",
     "superagent": "^1.4.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.0",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1",
+    "eslint-plugin-react": "^3.16.1"
   }
 }
